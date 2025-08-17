@@ -1,2 +1,1 @@
-export type AuthMiddlewareOptions = {
-}
+export type AuthMiddlewareOptions = {};
