@@ -4,6 +4,8 @@ export class AuthStore<T> {
     private user: T | null = null;
     private tokens: AuthTokens | null = null;
 
+    constructor() {}
+
     login(accessToken: string, refreshToken: string, user: T | null) {
         if (accessToken == "") throw new Error("Access token cannot be empty");
         if (refreshToken == "") throw new Error("Refresh token cannot be empty");
@@ -27,5 +29,13 @@ export class AuthStore<T> {
 
     getUser(): T | null {
         return this.user;
+    }
+
+    getAccessToken(): string | null {
+        return this.tokens?.accessToken || null;
+    }
+
+    getRefreshToken(): string | null {
+        return this.tokens?.refreshToken || null;
     }
 }
