@@ -1,35 +1,23 @@
 import type { Cookies } from '@sveltejs/kit';
 import type { AuthTokens } from '$lib/types/tokens.js';
 import type { AuthCookiesManagerOptions } from '$lib/types/cookies_options.js';
-
-const maxAgeDefault = 60 * 60 * 24 * 7;
+import { parseAuthCookiesManagerOptions } from './options.js';
 
 export class AuthCookiesManager {
     private accessTokenCookieName: string;
     private refreshTokenCookieName: string;
     private domain: string = "";
+    private sameSite: 'strict' | 'lax' | 'none' | '';
     private maxAgeSeconds: number; // Default to 1 week
 
     constructor(options: AuthCookiesManagerOptions) {
-        if (!options?.maxAgeSeconds) {
-            options.maxAgeSeconds = maxAgeDefault;
-        }
+        const parsedOptions = parseAuthCookiesManagerOptions(options)
 
-        if (!isStringPresent(options?.accessTokenCookieName)) {
-            options.accessTokenCookieName = 'access_token';
-        }
-
-        if (!isStringPresent(options?.refreshTokenCookieName)) {
-            options.refreshTokenCookieName = 'refresh_token';
-        }
-
-        if (isStringPresent(options.domain)) {
-            this.domain = options.domain as string;
-        }
-
-        this.accessTokenCookieName = options.accessTokenCookieName as string;
-        this.refreshTokenCookieName = options.refreshTokenCookieName as string;
-        this.maxAgeSeconds = options.maxAgeSeconds as number;
+        this.accessTokenCookieName = parsedOptions.cookies.accessTokenCookieName as string;
+        this.refreshTokenCookieName = parsedOptions.cookies.refreshTokenCookieName as string;
+        this.maxAgeSeconds = parsedOptions.cookies.maxAgeSeconds as number;
+        this.domain = parsedOptions.cookies.domain as string;
+        this.sameSite = parsedOptions.cookies.sameSite as 'strict' | 'lax' | 'none' | '';
     }
 
     getTokens(cookies: Cookies): AuthTokens {
@@ -65,7 +53,8 @@ export class AuthCookiesManager {
             path: '/',
             httpOnly: true,
             secure: true,
-            ...this._useDomain() ? { domain: this.domain } : {}
+            ...this._useDomain() ? { domain: this.domain } : {},
+            ...this.sameSite ? { sameSite: this.sameSite } : {},
         });
     }
 

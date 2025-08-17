@@ -1,6 +1,9 @@
 export type AuthCookiesManagerOptions = {
-    maxAgeSeconds: number;
-    accessTokenCookieName?: string;
-    refreshTokenCookieName?: string;
-    domain?: string;
+    cookies: {
+        accessTokenCookieName?: string;
+        refreshTokenCookieName?: string;
+        domain?: string;
+        maxAgeSeconds?: number;
+        sameSite?: 'strict' | 'lax' | 'none' | '';
+    };
 }
