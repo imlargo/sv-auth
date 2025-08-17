@@ -2,8 +2,11 @@ import { browser } from '$app/environment';
 import type { AuthTokens } from '$lib/types/tokens.js';
 
 export class AuthStore<T> {
-	private user: T | null = null;
-	private tokens: AuthTokens | null = null;
+	private userData: T | null = $state(null);
+	private tokens: AuthTokens | null = $state(null);
+	
+	readonly authenticated = $derived(this.isLoggedIn());
+	readonly user = $derived(this.userData);
 
 	constructor() { }
 
@@ -12,7 +15,7 @@ export class AuthStore<T> {
 		if (refreshToken == '') throw new Error('Refresh token cannot be empty');
 		if (user === null || user === undefined) throw new Error('User cannot be null or undefined');
 
-		this.user = user;
+		this.userData = user;
 		this.tokens = { accessToken, refreshToken };
 	}
 
@@ -26,19 +29,19 @@ export class AuthStore<T> {
 	}
 
 	logout() {
-		this.user = null;
+		this.userData = null;
 		this.tokens = null;
 	}
 
 	isLoggedIn(): boolean {
-		const userExists = this.user !== null && this.user !== undefined;
+		const userExists = this.userData !== null && this.userData !== undefined;
 		const tokensExist = this.tokens !== null && this.tokens !== undefined;
 		const validTokens = this.tokens?.accessToken !== '' && this.tokens?.refreshToken !== '';
 		return userExists && tokensExist && validTokens;
 	}
 
 	getUser(): T | null {
-		return this.user;
+		return this.userData;
 	}
 
 	getAccessToken(): string | null {
