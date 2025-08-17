@@ -8,17 +8,21 @@ export class AuthStore<T> {
 	constructor() { }
 
 	login(accessToken: string, refreshToken: string, user: T | null) {
+		if (accessToken == '') throw new Error('Access token cannot be empty');
+		if (refreshToken == '') throw new Error('Refresh token cannot be empty');
+		if (user === null || user === undefined) throw new Error('User cannot be null or undefined');
+
+		this.user = user;
+		this.tokens = { accessToken, refreshToken };
+	}
+
+	initiateUserSession(accessToken: string, refreshToken: string, user: T | null) {
 		try {
-			if (accessToken == '') throw new Error('Access token cannot be empty');
-			if (refreshToken == '') throw new Error('Refresh token cannot be empty');
-			if (user === null || user === undefined) throw new Error('User cannot be null or undefined');
+			this.login(accessToken, refreshToken, user);
 		} catch (error) {
 			console.error('[sv-auth] Login error in auth store:', error);
 			this.logout();
 		}
-
-		this.user = user;
-		this.tokens = { accessToken, refreshToken };
 	}
 
 	logout() {
