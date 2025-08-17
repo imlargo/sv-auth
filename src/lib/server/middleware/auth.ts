@@ -37,6 +37,7 @@ export function NewAuthMiddleware(
 
 	return handle;
 }
+
 function isPublicRoute(publicRoutes: string[], pathname: string) {
 	return publicRoutes.includes(pathname);
 }
