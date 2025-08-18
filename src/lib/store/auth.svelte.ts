@@ -3,7 +3,7 @@ import type { AuthTokens } from '$lib/types/tokens.js';
 
 /**
  * A generic authentication store for managing user session and tokens.
- * 
+ *
  * @template T - The type representing user data.
  */
 export class AuthStore<T> {
