@@ -1,5 +1,5 @@
 {
-	"name": "sv-auth",
+	"name": "svelte-auth-tools",
 	"version": "0.1.0",
 	"scripts": {
 		"dev": "vite dev",
