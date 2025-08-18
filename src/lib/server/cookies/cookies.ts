@@ -3,6 +3,22 @@ import type { AuthTokens } from '$lib/types/tokens.js';
 import type { AuthCookiesManagerOptions } from '$lib/types/cookies_options.js';
 import { parseAuthCookiesManagerOptions } from './options.js';
 
+/**
+ * Manages authentication cookies for access and refresh tokens.
+ * Provides methods to set, retrieve, and delete cookies related to authentication.
+ *
+ * @remarks
+ * This class is designed to work with a cookies interface and supports configuration
+ * for cookie names, domain, sameSite policy, and max age.
+ *
+ * @example
+ * ```typescript
+ * const manager = new AuthCookiesManager(options);
+ * manager.login(cookies, accessToken, refreshToken);
+ * const tokens = manager.getTokens(cookies);
+ * manager.logout(cookies);
+ * ```
+ */
 export class AuthCookiesManager {
 	private accessTokenCookieName: string;
 	private refreshTokenCookieName: string;
