@@ -4,11 +4,11 @@ import type { AuthTokens } from '$lib/types/tokens.js';
 export class AuthStore<T> {
 	private userData: T | null = $state(null);
 	private tokens: AuthTokens | null = $state(null);
-	
+
 	readonly authenticated = $derived(this.isLoggedIn());
 	readonly user = $derived(this.userData);
 
-	constructor() { }
+	constructor() {}
 
 	login(accessToken: string, refreshToken: string, user: T | null) {
 		if (accessToken == '') throw new Error('Access token cannot be empty');
