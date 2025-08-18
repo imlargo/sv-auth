@@ -14,8 +14,12 @@
 		"test:unit": "vitest",
 		"test": "npm run test:unit -- --run",
 		"changeset": "changeset",
-		"version": "changeset version",
-		"release": "changeset publish"
+		"changeset:version": "changeset version",
+		"changeset:publish": "changeset publish"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/imlargo/sv-auth.git"
 	},
 	"files": [
 		"dist",
