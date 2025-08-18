@@ -1,6 +1,18 @@
 import { redirect, type Handle } from '@sveltejs/kit';
 import type { AuthCookiesManager } from '../cookies/cookies.js';
 
+/**
+ * Creates a SvelteKit middleware for authentication and user session management.
+ *
+ * This middleware checks if the current route is public, verifies authentication status via cookies,
+ * fetches user data using the provided `getUserCall` function, and handles redirection to the login route if needed.
+ *
+ * @param authCookiesManager - An instance responsible for managing authentication cookies.
+ * @param publicRoutes - An array of route paths that do not require authentication. The login route is automatically included.
+ * @param loginRoute - The path to the login route. Defaults to '/login'.
+ * @param getUserCall - An async function that retrieves user data given an access token.
+ * @returns A SvelteKit `Handle` function to be used as middleware.
+ */
 export function NewAuthMiddleware(
 	authCookiesManager: AuthCookiesManager,
 	publicRoutes: string[] = [],

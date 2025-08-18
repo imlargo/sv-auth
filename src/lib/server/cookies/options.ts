@@ -2,6 +2,14 @@ import type { AuthCookiesManagerOptions } from '$lib/types/cookies_options.js';
 
 const maxAgeDefault = 60 * 60 * 24 * 7;
 
+/**
+ * Parses and normalizes the options for the authentication cookies manager.
+ *
+ * Ensures that all required cookie options are set, applying default values where necessary.
+ *
+ * @param options - The options object to parse, which may contain cookie configuration properties.
+ * @returns A normalized `AuthCookiesManagerOptions` object with all cookie properties set.
+ */
 export function parseAuthCookiesManagerOptions(options: AuthCookiesManagerOptions) {
 	const parsed: AuthCookiesManagerOptions = {
 		cookies: {}

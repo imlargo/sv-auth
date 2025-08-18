@@ -8,7 +8,7 @@ export class AuthCookiesManager {
 	private refreshTokenCookieName: string;
 	private domain: string = '';
 	private sameSite: 'strict' | 'lax' | 'none' | '';
-	private maxAgeSeconds: number; // Default to 1 week
+	private maxAgeSeconds: number;
 
 	constructor(options: AuthCookiesManagerOptions) {
 		const parsedOptions = parseAuthCookiesManagerOptions(options);

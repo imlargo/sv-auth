@@ -1,6 +1,11 @@
 import { browser } from '$app/environment';
 import type { AuthTokens } from '$lib/types/tokens.js';
 
+/**
+ * A generic authentication store for managing user session and tokens.
+ * 
+ * @template T - The type representing user data.
+ */
 export class AuthStore<T> {
 	private userData: T | null = $state(null);
 	private tokens: AuthTokens | null = $state(null);
